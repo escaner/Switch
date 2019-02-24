@@ -18,7 +18,7 @@ class Switch
 {
 public:
   // Defatult value for the bouncing stabilization time in microseconds
-  static const unsigned long DEFAULT_DEBOUNCE_TIME = 1000UL;
+  static const unsigned long DEFAULT_DEBOUNCE_TIME = 250UL;
 
   // HIGH & LOW macros defined in Arduino.h
   enum Flank: int8_t
