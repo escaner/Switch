@@ -1,0 +1,30 @@
+#######################################
+# Syntax Coloring Map For Switch
+#######################################
+
+#######################################
+# Classes, Datatypes (KEYWORD1)
+#######################################
+
+Switch	KEYWORD1
+Flank	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+updateState	KEYWORD2
+updateFlank	KEYWORD2
+
+#######################################
+# Instances (KEYWORD2)
+#######################################
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+DEFAULT_DEBOUNCE_TIME	KEYWORD2
+FLANK_FALLING	KEYWORD2
+FLANK_NONE	KEYWORD2
+FLANK_RISING	KEYWORD2

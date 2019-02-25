@@ -1,6 +1,22 @@
 /*
  *   Switch.h - Library to handle switches and buttons.
- *   Created by Escaner, 2019.
+ *
+ *   Copyright (C) 2019 Óscar Laborda
+ *
+ *   This file is part of Switch library.
+ *
+ *   Switch is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *   Switch is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *  along with Switch.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef _SWITCH_H_
@@ -8,6 +24,10 @@
 
 #include <Arduino.h>
 
+// Check for these assuptions made in the code
+#if LOW != 0x0 || HIGH != 0x1
+  #error Unexpected vaules for macros LOW and HIGH
+#endif
 
 /*
  *   This library performs debounce for switches and can provide either
