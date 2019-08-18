@@ -4,6 +4,7 @@
             "name": "Linux",
             "includePath": [
                 "/usr/share/arduino/hardware/arduino/avr/**",
+                "/usr/share/arduino/tools/**",
                 "/usr/share/arduino/hardware/arduino/avr/variants/micro",
                 "${workspaceFolder}/**",
                 "/usr/avr/sys-root/include/"
@@ -11,8 +12,8 @@
             "forcedInclude": [
                 "/usr/share/arduino/hardware/arduino/avr/cores/arduino/Arduino.h"
             ],
-            "defines": [ "UBRRH"],
-            "compilerPath": "/bin/gcc",
+            "defines": [ "UBRRH" ],
+            "compilerPath": "/usr/bin/gcc",
             "cStandard": "c11",
             "cppStandard": "c++17",
             "intelliSenseMode": "clang-x64"
