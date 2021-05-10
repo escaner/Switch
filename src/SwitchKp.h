@@ -1,7 +1,7 @@
 /*
- *   Switch.h - Library to handle switches and buttons.
+ *   SwitchKp.h - Library to handle switches and buttons.
  *
- *   Copyright (C) 2019 Óscar Laborda
+ *   Copyright (C) 2021 Óscar Laborda
  *
  *   This file is part of Switch library.
  *
@@ -19,8 +19,8 @@
  *  along with Switch.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef _SWITCH_H_
-#define _SWITCH_H_
+#ifndef _SWITCHKP_H_
+#define _SWITCHKP_H_
 
 #include <Arduino.h>
 
@@ -30,15 +30,21 @@
 #endif
 
 /*
- *   This library performs debounce for switches and can provide either
- *  the switch value or a flank.
+ *   This library performs debounce for keypads of switches and can provide
+    either the switch value or a flank. Does not support multiple simultaneous
+    switch presses.
+     Switch ids start in 0 and the id for no switch pressed is constant
+    SWITCH_NONE.
  */
 
-class Switch
+class SwitchKp
 {
 public:
-  // Defatult value for the bouncing stabilization time in microseconds
+  // Default value for the bouncing stabilization time in microseconds
   static const unsigned long DEFAULT_DEBOUNCE_TIME = 250UL;
+
+  // No switch pressed in the keypad
+  static const uint8_t SWITCH_NONE = UINT8_MAX;
 
   // HIGH & LOW macros defined in Arduino.h
   enum Flank_t: int8_t
@@ -49,9 +55,9 @@ public:
   };
 
   // Public methods
-  Switch(uint8_t State, unsigned long DebounceTime = DEFAULT_DEBOUNCE_TIME);
-  uint8_t updateState(uint8_t ReadValue);
-  inline Flank_t updateFlank(uint8_t ReadValue);
+  SwitchKp(uint8_t State, unsigned long DebounceTime = DEFAULT_DEBOUNCE_TIME);
+  uint8_t updateState(uint8_t ReadSwitch);
+  inline Flank_t updateFlank(uint8_t ReadSwitch, uint8_t *pEventSwitch);
 
 protected:
   const unsigned long _DebounceTime;  // Time of stable signal to skip bounces
@@ -65,26 +71,51 @@ protected:
  *   Updates the switch internal status with the latest read value, keeping
  *  track of bounces by calling updateState() and returns the resulting
  *  generated flank.
+ *   If a press of a switch is detected while the status reads that a prior
+ *  different switch was pressed, it will report a release of the original
+ *  switch.
  *   Parameters:
- *   * ReadValue (LOW, HIGH): value read in the corresponding pin
+ *   * ReadSwitch: switch for value read in the corresponding pin (LOW: none)
+ *   * pEventSwitch: returns the switch for which a press, release or still
+ *     pressing has happened. When stable and no switch pressed, it will return
+ *     SWITCH_NONE.
  *   Returns: flank produced by this update
  *   * FLANK_FALLING: switch state went from HIGH to LOW
  *   * FLANK_NONE: switch state did not change
  *   * FLANK_RISING: switch state went from LOW to HIGH
  */
-inline Switch::Flank_t Switch::updateFlank(uint8_t ReadValue)
+inline SwitchKp::Flank_t SwitchKp::updateFlank(uint8_t ReadSwitch,
+  uint8_t *pEventSwitch)
 {
   uint8_t PrevState, NewState;
+  Flank_t Flank;
 
   // Save current state
   PrevState = _State;
 
   // Update state
-  NewState = updateState(ReadValue);
+  NewState = updateState(ReadSwitch);
 
-  // Calculate flank from the change in state
-  return (Flank_t) (NewState - PrevState);
+  // Calculate flank from the change in state: the bigger is SWITCH_NONE
+  // Also return as event the state that is not SWITCH_NONE, if any.
+  if (NewState == PrevState)
+  {
+    Flank = FLANK_NONE;
+    *pEventSwitch = NewState;  // Both are valid
+  }
+  else if (NewState < PrevState)
+  {
+    Flank = FLANK_RISING;
+    *pEventSwitch = NewState;
+  }
+  else // if (NewState > PrevState)
+  {
+    Flank = FLANK_FALLING;
+    *pEventSwitch = PrevState;
+  }
+
+  return Flank;
 }
 
 
-#endif  // _SWITCH_H_
+#endif  // _SWITCHKP_H_

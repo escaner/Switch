@@ -7,6 +7,7 @@
 #######################################
 
 Switch	KEYWORD1
+SwitchKp	KEYWORD1
 Flank	KEYWORD1
 
 #######################################
@@ -25,6 +26,7 @@ updateFlank	KEYWORD2
 #######################################
 
 DEFAULT_DEBOUNCE_TIME	KEYWORD2
+SWITCH_NONE KEYWORD2
 FLANK_FALLING	KEYWORD2
 FLANK_NONE	KEYWORD2
 FLANK_RISING	KEYWORD2

@@ -5,11 +5,12 @@ debounce.
 
  The class keeps track of the last event different from the current state and
 when it is stable for a given time, it assumes a change in the switch state.
-
  Provides either switch state information and flank information.
+ A SwitchKp class works with analog keypads that do not support multiple
+simultaneous key presses.
 
 
-Copyright (C) 2019, Óscar Laborda
+Copyright (C) 2019-2021, Óscar Laborda
 
 This file is part of Switch library.
 
