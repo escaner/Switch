@@ -55,7 +55,8 @@ public:
   };
 
   // Public methods
-  SwitchKp(uint8_t State, unsigned long DebounceTime = DEFAULT_DEBOUNCE_TIME);
+  SwitchKp(uint8_t State = SWITCH_NONE,
+    unsigned long DebounceTime = DEFAULT_DEBOUNCE_TIME);
   uint8_t updateState(uint8_t ReadSwitch);
   inline Flank_t updateFlank(uint8_t ReadSwitch, uint8_t *pEventSwitch);
 

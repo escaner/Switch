@@ -30,7 +30,7 @@
  *   * State: initial state of the switch
  *   * DebounceTime: Time to assume the bouncing has stabilized, in microseconds
  */
-SwitchKp::SwitchKp(uint8_t State, unsigned long DebounceTime):
+SwitchKp::SwitchKp(uint8_t State = SWITCH_NONE, unsigned long DebounceTime):
   _DebounceTime(DebounceTime)
 {
   // _LastBounceTime initialization not required (but defaults to 0)

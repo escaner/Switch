@@ -49,7 +49,8 @@ public:
   };
 
   // Public methods
-  Switch(uint8_t State, unsigned long DebounceTime = DEFAULT_DEBOUNCE_TIME);
+  Switch(uint8_t State = LOW,
+    unsigned long DebounceTime = DEFAULT_DEBOUNCE_TIME);
   uint8_t updateState(uint8_t ReadValue);
   inline Flank_t updateFlank(uint8_t ReadValue);
 
